@@ -26,10 +26,13 @@ public class Address {
     private String number;
 
     @Column(nullable = false, length = 100)
+    private String neighborhood;
+
+    @Column(nullable = false, length = 100)
     private String complement;
 
     @Column(nullable = false, length = 100)
-    private String cep;
+    private String zipCode;
 
     @ManyToOne
     @JoinColumn(name = "city_id", nullable = false)

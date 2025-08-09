@@ -2,7 +2,6 @@ package com.core.system.core_system_back.model;
 
 import java.util.UUID;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,20 +12,15 @@ import lombok.Data;
 
 @Data
 @Entity
-public class UserResponsible {
+public class UserCompany {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, length = 150)
-    private String name;
-    
-    @Column(nullable = false)
-    private String cargo;
-
-    @Column(nullable = false, length = 50)
-    private String contato;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)

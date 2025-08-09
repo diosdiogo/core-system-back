@@ -1,5 +1,6 @@
 package com.core.system.core_system_back.model;
 
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -9,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Data
@@ -43,5 +45,8 @@ public class Company {
 
     @Column(nullable = false, length = 150)
     private String social_media;
+
+    @OneToMany(mappedBy = "company")
+    private List<UserCompany> users;
 
 }
