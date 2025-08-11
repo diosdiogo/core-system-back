@@ -1,5 +1,6 @@
 package com.core.system.core_system_back.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,5 +53,5 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<UserCompany> companies;
+    private List<UserCompany> companies = new ArrayList<>();
 }
