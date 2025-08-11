@@ -1,7 +1,7 @@
 package com.core.system.core_system_back.controller;
 
 import com.core.system.core_system_back.dto.UserDTO;
-import com.core.system.core_system_back.model.User;
+import com.core.system.core_system_back.dto.UserResponseDTO;
 import com.core.system.core_system_back.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,8 +23,8 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "Criar usuário", description = "Cadatrar novo usuário do sistema")
-    public ResponseEntity<User> createUser(@Valid @RequestBody UserDTO dto) {
-        User createdUser = userService.createUser(dto);
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserDTO dto) {
+        UserResponseDTO createdUser = userService.createUser(dto);
         return ResponseEntity.ok(createdUser);
     }
 }

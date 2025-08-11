@@ -19,19 +19,19 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "street", nullable = false, length = 100)
     private String street;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "number", nullable = false, length = 100)
     private String number;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "neighborhood", nullable = true, length = 100)
     private String neighborhood;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "complement", nullable = true, length = 100)
     private String complement;
 
-    @Column(nullable = false, length = 100)
+    @Column(name = "zip_code", nullable = false, length = 100)
     private String zipCode;
 
     @ManyToOne

@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -18,9 +20,13 @@ public class Profile {
     private UUID id;
 
     @Column(nullable = false, length = 100)
-    private String name;
+    private String nome;
 
-    @Column(nullable = false, length = 50)
-    private String status;
+    @Column(nullable = false)
+    private Boolean status;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id", nullable = false)
+    private Company company;
 
 }
