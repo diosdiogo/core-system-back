@@ -16,6 +16,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -124,5 +126,13 @@ public class CompanyService {
         } else {
             throw new IllegalArgumentException("É necessário fornecer cityId ou cityName");
         }
+    }
+
+    public List<Company> getAllCompanies() {
+        return companyRepository.findAll();
+    }
+
+    public Optional<Company> getCompanyById(UUID id) {
+        return companyRepository.findById(id);
     }
 }

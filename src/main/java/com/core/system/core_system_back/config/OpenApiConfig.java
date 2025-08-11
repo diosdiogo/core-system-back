@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.tags.Tag;
-import org.springdoc.core.customizers.OpenApiCustomiser;
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -35,17 +35,17 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
             .addTagsItem(new io.swagger.v3.oas.models.tags.Tag().name("Auth").description("Operações de autenticação"))
+            .addTagsItem(new io.swagger.v3.oas.models.tags.Tag().name("Apps").description("Controle de aplicações"))
             .addTagsItem(new io.swagger.v3.oas.models.tags.Tag().name("User").description("Controle de usuário"))
             .addTagsItem(new io.swagger.v3.oas.models.tags.Tag().name("Profile").description("Controle de perfis"))
             .addTagsItem(new io.swagger.v3.oas.models.tags.Tag().name("Company").description("Controle de empresas"))
-            .addTagsItem(new io.swagger.v3.oas.models.tags.Tag().name("Apps").description("Controle de aplicações"))
             .addTagsItem(new io.swagger.v3.oas.models.tags.Tag().name("Hello").description("Operações de exemplo"));
     }
 
     @Bean
-    public OpenApiCustomiser sortTagsCustomiser() {
+    public OpenApiCustomizer sortTagsCustomizer() {
         return openApi -> {
-            List<String> order = Arrays.asList("Auth", "User", "Profile", "Company", "Apps", "Hello");
+            List<String> order = Arrays.asList("Auth", "Apps", "User", "Profile", "Company", "Hello");
 
             if (openApi.getTags() != null) {
                 LinkedHashMap<String, Tag> tagsMap = new LinkedHashMap<>();

@@ -7,6 +7,11 @@ import com.core.system.core_system_back.service.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +31,19 @@ public class CompanyController {
     public ResponseEntity<Company> createCompany(@Valid @RequestBody CompanyDTO dto) {
         Company createdCompany = companyService.createCompany(dto);
         return ResponseEntity.ok(createdCompany);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Buscar empresa por ID", description = "Retorna uma empresa com base no ID fornecido")
+    public ResponseEntity<Company> getCompanyById(@PathVariable UUID id) {
+        Optional<Company> company = companyService.getCompanyById(id);
+        return company.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    @Operation(summary = "Listar todas as empresas", description = "Retorna uma lista de todas as empresas cadastradas")
+    public ResponseEntity<List<Company>> getAllCompanies() {
+        List<Company> companies = companyService.getAllCompanies();
+        return ResponseEntity.ok(companies);
     }
 } 

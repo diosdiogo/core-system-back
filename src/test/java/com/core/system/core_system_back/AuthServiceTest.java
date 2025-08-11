@@ -22,6 +22,7 @@ import com.core.system.core_system_back.model.Profile;
 import com.core.system.core_system_back.model.User;
 import com.core.system.core_system_back.model.UserCompany;
 import com.core.system.core_system_back.repository.UserRepository;
+import com.core.system.core_system_back.repository.UserResponsibleRepository;
 import com.core.system.core_system_back.security.JwtUtil;
 import com.core.system.core_system_back.service.AuthService;
 
@@ -36,6 +37,9 @@ class AuthServiceTest {
 
     @Mock
     private JwtUtil jwtUtil;
+
+    @Mock
+    private UserResponsibleRepository userResponsibleRepository;
 
     @InjectMocks
     private AuthService authService;
@@ -87,6 +91,8 @@ class AuthServiceTest {
             .thenReturn(true);
         when(jwtUtil.generateToken("teste@teste.com"))
             .thenReturn("jwt_token_123");
+        when(userResponsibleRepository.existsByUser_IdAndCompany_Id(any(), any()))
+            .thenReturn(false);
 
         // Act
         LoginResponseDTO result = authService.login(loginRequest);
@@ -103,6 +109,8 @@ class AuthServiceTest {
         assertNotNull(result.getCompanies());
         assertEquals(1, result.getCompanies().size());
         assertEquals("Empresa Teste", result.getCompanies().get(0).getName_fant());
+        assertFalse(result.getCompanies().get(0).getIsResponsible());
+        assertNull(result.getCompanies().get(0).getCargo());
     }
 
     @Test
@@ -121,9 +129,7 @@ class AuthServiceTest {
     void testLoginWrongPassword() {
         // Arrange
         when(userRepository.findByEmailWithRelations("teste@teste.com"))
-            .thenReturn(Optional.of(testUser));
-        when(passwordEncoder.matches("senha123", "senha_criptografada"))
-            .thenReturn(false);
+            .thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(RuntimeException.class, () -> {

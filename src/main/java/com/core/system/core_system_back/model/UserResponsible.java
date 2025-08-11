@@ -19,16 +19,14 @@ public class UserResponsible {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Column(nullable = false, length = 150)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
     
-    @Column(nullable = false)
-    private String cargo;
-
-    @Column(nullable = false, length = 50)
-    private String contato;
-
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
+
+    @Column(nullable = false, length = 100)
+    private String cargo;
 }

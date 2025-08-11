@@ -35,5 +35,7 @@ public class LoginResponseDTO {
         private String name_fant;
         private String razao_social;
         private String cnpj;
+        private Boolean isResponsible;
+        private String cargo;
     }
 }
