@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.core.system.core_system_back.dto.LoginRequestDTO;
 import com.core.system.core_system_back.dto.LoginResponseDTO;
 import com.core.system.core_system_back.exception.InvalidPasswordException;
+import com.core.system.core_system_back.exception.UserInactiveException;
 import com.core.system.core_system_back.exception.UserNotFoundException;
 import com.core.system.core_system_back.model.User;
 import com.core.system.core_system_back.model.UserCompany;
@@ -34,6 +35,10 @@ public class AuthService {
     public LoginResponseDTO login(LoginRequestDTO loginRequest) {
         User user = userRepository.findByEmailWithRelations(loginRequest.getEmail())
                 .orElseThrow(() -> new UserNotFoundException("Usuário não encontrado com o email: " + loginRequest.getEmail()));
+
+        if(!user.getActive()) {
+            throw new UserInactiveException("Usuário inativo: " + loginRequest.getEmail());
+        }
 
         if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw new InvalidPasswordException("Senha incorreta para o usuário: " + loginRequest.getEmail());

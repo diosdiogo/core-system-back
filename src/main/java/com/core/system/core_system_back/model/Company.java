@@ -45,6 +45,9 @@ public class Company {
     @Column(nullable = false, length = 150)
     private String matriz;
 
+    @Column(nullable = false, length = 150)
+    private String tipo;
+
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;

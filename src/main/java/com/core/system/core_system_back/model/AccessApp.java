@@ -1,6 +1,5 @@
 package com.core.system.core_system_back.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -16,29 +15,20 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "app_company")
-public class AppCompany {
+@Table(name = "access_app")
+public class AccessApp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "app_id", nullable = false)
-    private Apps app;
+    @JoinColumn(name = "id_profile", nullable = false)
+    private Profile profile;
 
     @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
-
-    @Column(name = "ativo")
-    private Boolean ativo;
-
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "validade")
-    private LocalDate validade;
+    @JoinColumn(name = "id_app_company", nullable = false)
+    private AppCompany appCompany;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

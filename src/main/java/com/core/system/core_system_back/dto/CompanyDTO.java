@@ -10,6 +10,7 @@ public class CompanyDTO {
     private String im;
     private String cnpj;
     private String matriz;
+    private String tipo;
     private String socialMedia;
     
     // Opção 1: Usar nomes (mais amigável para o usuário)

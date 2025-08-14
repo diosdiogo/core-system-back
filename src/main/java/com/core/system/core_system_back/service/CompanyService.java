@@ -73,6 +73,7 @@ public class CompanyService {
         company.setIm(dto.getIm());
         company.setCnpj(dto.getCnpj());
         company.setMatriz(dto.getMatriz());
+        company.setTipo(dto.getTipo());
         company.setSocial_media(dto.getSocialMedia());
         company.setAddress(address);
         company.setStatus(CompanyStatus.ATIVO); // Status padrão para novas empresas
