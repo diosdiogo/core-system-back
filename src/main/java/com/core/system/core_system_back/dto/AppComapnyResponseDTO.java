@@ -1,23 +1,22 @@
 package com.core.system.core_system_back.dto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import com.core.system.core_system_back.enums.CompanyStatus;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponsibleResponseDTO {
+public class AppComapnyResponseDTO {
     private UUID id;
-    private UUID userId;
-    private String userName;
-    private String userEmail;
-    private String userCargo;
+    private UUID appId;
+    private String appName;
     private UUID companyId;
     private String companyName;
-    private String cargo;
-    private CompanyStatus companyStatus;
+    private Boolean ativo;
+    private String status;
+    private LocalDate validade;
 } 

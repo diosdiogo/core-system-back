@@ -36,14 +36,4 @@ public class Apps {
     @Column(name="status")
     private String status;
 
-
-
-    // public Apps(String icon, UUID id, String name, Boolean status, String url, String versao) {
-    //     this.icon = icon;
-    //     this.id = id;
-    //     this.name = name;
-    //     this.status = status;
-    //     this.url = url;
-    //     this.versao = versao;
-    // }
 }

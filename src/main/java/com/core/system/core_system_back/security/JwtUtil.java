@@ -8,6 +8,9 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.core.system.core_system_back.exception.JwtTokenExpiredException;
+import com.core.system.core_system_back.exception.JwtTokenInvalidException;
+
 @Component
 public class JwtUtil {
 
@@ -32,15 +35,23 @@ public class JwtUtil {
     }
 
     public String extractUsername(String token) {
-        return parseClaims(token).getSubject();
+        try {
+            return parseClaims(token).getSubject();
+        } catch (ExpiredJwtException e) {
+            throw new JwtTokenExpiredException("Token JWT expirado", e);
+        } catch (JwtException | IllegalArgumentException e) {
+            throw new JwtTokenInvalidException("Token JWT inválido", e);
+        }
     }
 
     public boolean validateToken(String token) {
         try {
             parseClaims(token);
             return true;
+        } catch (ExpiredJwtException e) {
+            throw new JwtTokenExpiredException("Token JWT expirado", e);
         } catch (JwtException | IllegalArgumentException e) {
-            return false;
+            throw new JwtTokenInvalidException("Token JWT inválido", e);
         }
     }
 

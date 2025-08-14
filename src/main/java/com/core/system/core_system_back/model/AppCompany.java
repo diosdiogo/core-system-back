@@ -1,8 +1,8 @@
 package com.core.system.core_system_back.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,21 +15,27 @@ import lombok.Data;
 
 @Data
 @Entity
-public class UserResponsible {
+public class AppCompany {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    
+    @JoinColumn(name = "app_id", nullable = false)
+    private Apps app;
+
     @ManyToOne
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
-    @Column(nullable = false, length = 100)
-    private String cargo;
+    @Column(name = "ativo")
+    private Boolean ativo;
 
-}
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "validade")
+    private LocalDate validade;
+
+} 

@@ -68,7 +68,8 @@ public class AuthService {
                     userCompany.getCompany().getRazao_social(),
                     userCompany.getCompany().getCnpj(),
                     isResponsible,
-                    cargo
+                    cargo,
+                    userCompany.getCompany().getStatus()
                 );
             })
             .collect(Collectors.toList());
@@ -79,6 +80,7 @@ public class AuthService {
             user.getEmail(),
             user.getUser(),
             user.getContato(),
+            user.getCargo(),
             profileInfo,
             companiesInfo
         );

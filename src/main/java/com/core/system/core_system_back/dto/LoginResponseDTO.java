@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.core.system.core_system_back.enums.CompanyStatus;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +17,7 @@ public class LoginResponseDTO {
     private String email;
     private String user;
     private String contato;
+    private String cargo;
     private ProfileInfo profile;
     private List<CompanyInfo> companies;
     
@@ -37,5 +40,6 @@ public class LoginResponseDTO {
         private String cnpj;
         private Boolean isResponsible;
         private String cargo;
+        private CompanyStatus status;
     }
 }

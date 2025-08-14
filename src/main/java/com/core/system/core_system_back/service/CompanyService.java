@@ -4,6 +4,7 @@ import com.core.system.core_system_back.dto.CompanyDTO;
 import com.core.system.core_system_back.model.Address;
 import com.core.system.core_system_back.model.City;
 import com.core.system.core_system_back.model.Company;
+import com.core.system.core_system_back.enums.CompanyStatus;
 import com.core.system.core_system_back.model.Country;
 import com.core.system.core_system_back.model.State;
 import com.core.system.core_system_back.repository.AddressRepository;
@@ -73,7 +74,8 @@ public class CompanyService {
         company.setCnpj(dto.getCnpj());
         company.setMatriz(dto.getMatriz());
         company.setSocial_media(dto.getSocialMedia());
-        company.setAdress(address);
+        company.setAddress(address);
+        company.setStatus(CompanyStatus.ATIVO); // Status padrão para novas empresas
 
         return companyRepository.save(company);
     }

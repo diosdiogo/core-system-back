@@ -21,6 +21,7 @@ import com.core.system.core_system_back.exception.CompanyNotFoundException;
 import com.core.system.core_system_back.exception.DuplicateResponsibilityException;
 import com.core.system.core_system_back.exception.UserNotFoundException;
 import com.core.system.core_system_back.model.Company;
+import com.core.system.core_system_back.enums.CompanyStatus;
 import com.core.system.core_system_back.model.User;
 import com.core.system.core_system_back.model.UserResponsible;
 import com.core.system.core_system_back.repository.CompanyRepository;
@@ -54,10 +55,12 @@ class UserResponsibleServiceTest {
         testUser.setId(UUID.randomUUID());
         testUser.setName("Usuário Teste");
         testUser.setEmail("teste@teste.com");
+        testUser.setCargo("Desenvolvedor Senior");
 
         testCompany = new Company();
         testCompany.setId(UUID.randomUUID());
         testCompany.setName_fant("Empresa Teste");
+        testCompany.setStatus(CompanyStatus.ATIVO);
 
         testUserResponsible = new UserResponsible();
         testUserResponsible.setId(UUID.randomUUID());

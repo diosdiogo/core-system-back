@@ -67,6 +67,62 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(AppNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleAppNotFoundException(
+            AppNotFoundException ex, WebRequest request) {
+        
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+            HttpStatus.NOT_FOUND.value(),
+            "Aplicação não encontrada",
+            "A aplicação informada não foi encontrada em nossa base de dados. Verifique o ID da aplicação e tente novamente.",
+            request.getDescription(false).replace("uri=", "")
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicateAppCompanyException.class)
+    public ResponseEntity<ErrorResponseDTO> handleDuplicateAppCompanyException(
+            DuplicateAppCompanyException ex, WebRequest request) {
+        
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+            HttpStatus.CONFLICT.value(),
+            "Relacionamento duplicado",
+            "Já existe um relacionamento entre esta aplicação e empresa. Não é possível criar vínculos duplicados.",
+            request.getDescription(false).replace("uri=", "")
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(JwtTokenExpiredException.class)
+    public ResponseEntity<ErrorResponseDTO> handleJwtTokenExpiredException(
+            JwtTokenExpiredException ex, WebRequest request) {
+        
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+            HttpStatus.UNAUTHORIZED.value(),
+            "Token expirado",
+            "Seu token de acesso expirou. Faça login novamente para obter um novo token.",
+            request.getDescription(false).replace("uri=", "")
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(JwtTokenInvalidException.class)
+    public ResponseEntity<ErrorResponseDTO> handleJwtTokenInvalidException(
+            JwtTokenInvalidException ex, WebRequest request) {
+        
+        ErrorResponseDTO errorResponse = new ErrorResponseDTO(
+            HttpStatus.UNAUTHORIZED.value(),
+            "Token inválido",
+            "O token de acesso fornecido é inválido. Verifique o token e tente novamente.",
+            request.getDescription(false).replace("uri=", "")
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponseDTO> handleIllegalArgumentException(
             IllegalArgumentException ex, WebRequest request) {

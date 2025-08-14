@@ -25,11 +25,14 @@ Este documento resume todas as migrações Flyway criadas para o sistema Core Sy
 - **V12**: `create_table_company.sql` - Tabela de empresas
 - **V13**: `insert_sample_companies.sql` - Dados de exemplo de empresas
 
-### **V14 - V17: Aplicações e Usuários Responsáveis**
+### **V14 - V20: Aplicações, Usuários Responsáveis, Status de Empresas, Cargo de Usuários e Relacionamentos App-Empresa**
 - **V14**: `create_table_apps.sql` - Tabela de aplicações
 - **V15**: `create_table_user_responsible.sql` - Tabela de usuários responsáveis
-- **V16**: `insert_sample_apps.sql` - Dados de exemplo de aplicações
-- **V17**: `insert_sample_user_responsible.sql` - Dados de exemplo de usuários responsáveis
+- **V16**: `create_country_table.sql` - Tabela de países
+- **V17**: `add_status_column_to_company.sql` - Adiciona coluna status na tabela company
+- **V18**: `add_cargo_column_to_user.sql` - Adiciona coluna cargo na tabela user
+- **V19**: `create_table_app_empresa.sql` - Tabela de relacionamento entre aplicações e empresas
+- **V20**: `insert_sample_app_empresa.sql` - Dados de exemplo para relacionamentos app-empresa
 
 ## 🏗️ **Estrutura Completa do Banco**
 
@@ -39,13 +42,15 @@ Este documento resume todas as migrações Flyway criadas para o sistema Core Sy
 3. **city** - Cidades
 4. **address** - Endereços
 5. **profile** - Perfis de usuário
-6. **company** - Empresas
-7. **user** - Usuários do sistema
+6. **company** - Empresas (com status: ATIVO, BLOQUEADO, TESTE, INATIVO, PENDENTE)
+7. **user** - Usuários do sistema (com cargo/função)
 8. **apps** - Aplicações do sistema
 9. **user_responsible** - Usuários responsáveis das empresas
+10. **app_empresa** - Relacionamento entre aplicações e empresas
 
 ### **Tabelas de Relacionamento**
 1. **user_company** - Relacionamento many-to-many entre usuários e empresas
+2. **app_empresa** - Relacionamento many-to-many entre aplicações e empresas
 
 ## 🔗 **Relacionamentos**
 
@@ -67,6 +72,11 @@ company (1) ←→ (N) user_responsible
 company (1) ←→ (1) address
 ```
 
+### **Aplicações e Empresas**
+```
+company (N) ←→ (N) apps (através de app_empresa)
+```
+
 ## 📊 **Dados de Exemplo Incluídos**
 
 ### **Empresas**
@@ -84,10 +94,15 @@ company (1) ←→ (1) address
 - Maria Santos (Diretora de Operações - Tech Solutions)
 - Carlos Oliveira (Desenvolvedor Senior - Arte Visual Soft)
 
+### **Relacionamentos App-Empresa**
+- Core System + Gestão de Usuários + Dashboard + Relatórios → Arte Visual Soft (ATIVO)
+- Core System → Tech Solutions (TESTE)
+- Gestão de Usuários → Tech Solutions (INATIVO)
+
 ## ✅ **Status das Migrações**
 
-- **Total de Migrações**: 17
-- **Tabelas Criadas**: 9 principais + 1 de relacionamento
+- **Total de Migrações**: 20
+- **Tabelas Criadas**: 10 principais + 2 de relacionamento
 - **Dados de Exemplo**: Incluídos para todas as tabelas principais
 - **Constraints**: Todas as chaves estrangeiras configuradas
 - **Triggers**: Campos `updated_at` atualizados automaticamente
@@ -126,6 +141,7 @@ Após executar todas as migrações, você pode verificar se tudo foi criado cor
 SELECT * FROM company;
 SELECT * FROM apps;
 SELECT * FROM user_responsible;
+SELECT * FROM app_empresa;
 ```
 
 ## 📝 **Notas Importantes**

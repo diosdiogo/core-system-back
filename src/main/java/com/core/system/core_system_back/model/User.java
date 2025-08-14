@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -40,6 +41,9 @@ public class User {
     @Column(nullable = false, length = 200)
     private String contato;
 
+    @Column(length = 100)
+    private String cargo;
+
     @Column(nullable = false)
     private Boolean active;
 
@@ -54,4 +58,8 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<UserCompany> companies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    private List<UserResponsible> userResponsibles = new ArrayList<>();
 }

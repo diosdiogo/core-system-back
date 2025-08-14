@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.core.system.core_system_back.dto.LoginRequestDTO;
 import com.core.system.core_system_back.dto.LoginResponseDTO;
+import com.core.system.core_system_back.exception.InvalidPasswordException;
+import com.core.system.core_system_back.exception.UserNotFoundException;
 import com.core.system.core_system_back.model.Company;
 import com.core.system.core_system_back.model.Profile;
 import com.core.system.core_system_back.model.User;
@@ -25,6 +27,7 @@ import com.core.system.core_system_back.repository.UserRepository;
 import com.core.system.core_system_back.repository.UserResponsibleRepository;
 import com.core.system.core_system_back.security.JwtUtil;
 import com.core.system.core_system_back.service.AuthService;
+import com.core.system.core_system_back.enums.CompanyStatus;
 
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest {
@@ -63,6 +66,7 @@ class AuthServiceTest {
         testCompany.setName_fant("Empresa Teste");
         testCompany.setRazao_social("Empresa Teste LTDA");
         testCompany.setCnpj("12345678901234");
+        testCompany.setStatus(CompanyStatus.ATIVO);
 
         testUserCompany = new UserCompany();
         testUserCompany.setCompany(testCompany);
@@ -74,6 +78,7 @@ class AuthServiceTest {
         testUser.setUser("usuario_teste");
         testUser.setPassword("senha_criptografada");
         testUser.setContato("11999999999");
+        testUser.setCargo("Desenvolvedor");
         testUser.setProfile(testProfile);
         testUser.setCompanies(Arrays.asList(testUserCompany));
 
@@ -104,6 +109,7 @@ class AuthServiceTest {
         assertEquals("teste@teste.com", result.getEmail());
         assertEquals("usuario_teste", result.getUser());
         assertEquals("11999999999", result.getContato());
+        assertEquals("Desenvolvedor", result.getCargo());
         assertNotNull(result.getProfile());
         assertEquals("Admin", result.getProfile().getNome());
         assertNotNull(result.getCompanies());
@@ -111,6 +117,7 @@ class AuthServiceTest {
         assertEquals("Empresa Teste", result.getCompanies().get(0).getName_fant());
         assertFalse(result.getCompanies().get(0).getIsResponsible());
         assertNull(result.getCompanies().get(0).getCargo());
+        assertEquals(CompanyStatus.ATIVO, result.getCompanies().get(0).getStatus());
     }
 
     @Test
@@ -120,7 +127,7 @@ class AuthServiceTest {
             .thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(UserNotFoundException.class, () -> {
             authService.login(loginRequest);
         });
     }
@@ -129,10 +136,12 @@ class AuthServiceTest {
     void testLoginWrongPassword() {
         // Arrange
         when(userRepository.findByEmailWithRelations("teste@teste.com"))
-            .thenReturn(Optional.empty());
+            .thenReturn(Optional.of(testUser));
+        when(passwordEncoder.matches("senha123", "senha_criptografada"))
+            .thenReturn(false);
 
         // Act & Assert
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(InvalidPasswordException.class, () -> {
             authService.login(loginRequest);
         });
     }

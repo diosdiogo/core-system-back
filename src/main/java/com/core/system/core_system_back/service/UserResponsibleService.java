@@ -83,9 +83,11 @@ public class UserResponsibleService {
             userResponsible.getUser().getId(),
             userResponsible.getUser().getName(),
             userResponsible.getUser().getEmail(),
+            userResponsible.getUser().getCargo(),
             userResponsible.getCompany().getId(),
             userResponsible.getCompany().getName_fant(),
-            userResponsible.getCargo()
+            userResponsible.getCargo(),
+            userResponsible.getCompany().getStatus()
         );
     }
 } 
